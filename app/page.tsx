@@ -72,12 +72,13 @@ export default function Home() {
     scrollToBottom();
   }, [messages]);
 
+  const ENDPOINT = "http://18.191.152.254:8000";
   const API = "http://ec2-18-116-202-251.us-east-2.compute.amazonaws.com";
 
   const startChat = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${API}:8000/api/chat/start`, {
+      const response = await fetch(`${ENDPOINT}/api/chat/start`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -107,7 +108,7 @@ export default function Home() {
     setInputMessage("");
 
     try {
-      const response = await fetch(`${API}:8000/api/chat/message`, {
+      const response = await fetch(`${ENDPOINT}/api/chat/message`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
