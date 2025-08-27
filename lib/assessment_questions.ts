@@ -1,0 +1,121 @@
+export const ASSESSMENT_QUESTIONS = [
+  {
+    id: "age",
+    question: "What is your age?",
+    type: "number",
+    scoring: { "under 45": 0, "45-65": 1, "over 65": 2 },
+  },
+  {
+    id: "sex",
+    question: "Do you classify as male or female?",
+    type: "text",
+    scoring: { male: 1, female: 0 },
+  },
+  {
+    id: "pain_type",
+    question:
+      "How would you describe your chest pain? Sharp, stabbing pain, Crushing, squeezing, or pressure-like, Burning sensation, Dull ache",
+    type: "multiple_choice",
+    scoring: {
+      A: 1,
+      B: 1,
+      C: 1,
+      D: 1,
+      sharp: 1,
+      crushing: 1,
+      squeezing: 1,
+      pressure: 1,
+      burning: 1,
+      dull: 1,
+    },
+  },
+  {
+    id: "location",
+    question:
+      "Does the pain spread to other areas? If yes, where? (Examples: left arm, jaw, neck, back, both arms)",
+    type: "text",
+    scoring: {
+      center: 1,
+      substernal: 1,
+      left: 1,
+      pressure: 1,
+      squeezing: 1,
+      tightness: 1,
+      heavy: 1,
+      radiate: 1,
+      arm: 1,
+      jaw: 1,
+      neck: 1,
+      back: 1,
+      shoulder: 1,
+      stomach: 1,
+    },
+  },
+  {
+    id: "trigger",
+    question:
+      "Does the pain come on with physical activity or emotional stress? For example when climbing stairs or walking uphill?",
+    type: "text",
+    scoring: {
+      exercise: 1,
+      exertion: 1,
+      walking: 1,
+      hurry: 1,
+      uphill: 1,
+      "physical activity": 1,
+      stress: 1,
+      anxiety: 1,
+    },
+  },
+  {
+    id: "associated_symptoms",
+    question:
+      "Are you experiencing any of these symptoms along with chest pain? (You can mention multiple)\n- Shortness of breath\n- Nausea or vomiting\n- Sweating\n- Dizziness\n- Rapid heartbeat",
+    type: "text",
+    scoring: {
+      shortness: 1,
+      breath: 1,
+      nausea: 1,
+      vomiting: 1,
+      sweating: 1,
+      dizziness: 1,
+      rapid: 1,
+      heartbeat: 1,
+    },
+  },
+  {
+    id: "relief",
+    question: "Does the chest pain go away with rest or nitroglycerin?",
+    type: "text",
+    scoring: {
+      rest: 1,
+      nitro: 1,
+      "goes away in a few minutes": 1,
+      "better after resting": 1,
+    },
+  },
+  {
+    id: "risk_factors",
+    question:
+      "Do you have any of these risk factors? Diabetes, High blood pressure, High cholesterol, Smoking? (You can mention multiple)\n- High blood pressure\n- Diabetes\n- High cholesterol\n- Smoking history\n- Family history of heart disease\n- Previous heart problems",
+    type: "text",
+    scoring: {
+      pressure: 1,
+      diabetes: 1,
+      cholesterol: 1,
+      smoking: 1,
+    },
+  },
+  {
+    id: "name",
+    question: "What is your name?",
+    type: "text",
+    scoring: { name: 1 },
+  },
+  {
+    id: "phone_number",
+    question: "What is your phone number?",
+    type: "text",
+    scoring: { phone_number: 1 },
+  },
+];

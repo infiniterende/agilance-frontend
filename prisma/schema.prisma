@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Patient {
+  id             String  @id @default(cuid())
+  name           String?
+  age            Int?
+  gender         String?
+  phone_number   String?
+  email          String?
+  address        String?
+  pain_quality   String?
+  location       String?
+  stress         String?
+  sob            String?
+  hypertension   String?
+  diabetes       String?
+  hyperlipidemia String?
+  smoking        String?
+  probability    Int?
+
+  // Additional medical fields
+  chiefComplaint     String? @map("chief_complaint")
+  medicalHistory     String? @map("medical_history")
+  currentMedications String? @map("current_medications")
+  allergies          String?
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  // Foreign Keys
+  doctorId  String?  @map("doctor_id")
+
+  // Relationships
+  doctor        Doctor?        @relation(fields: [doctorId], references: [id])
+  appointments  Appointment[]
+  voiceSessions VoiceSession[]
+
+  @@map("patients")
+}
+
+model Doctor {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  password      String
+  specialty     String?
+  phone         String?
+  licenseNumber String?  @unique @map("license_number")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  patients     Patient[]
+  appointments Appointment[]
+
+  @@map("doctors")
+}
+
+model Appointment {
+  id              String   @id @default(cuid())
+  patientId       String   @map("patient_id")
+  doctorId        String   @map("doctor_id")
+  date            DateTime
+  durationMinutes Int      @default(30) @map("duration_minutes")
+  appointmentType String?  @map("appointment_type")
+  status          String   @default("scheduled")
+  notes           String?
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  patient Patient @relation(fields: [patientId], references: [id])
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
+
+  @@map("appointments")
+}
+
+model VoiceSession {
+  id                   String    @id @default(cuid())
+  patientId            String    @map("patient_id")
+  livekitSessionId     String?   @map("livekit_session_id")
+  livekitRoomName      String?   @map("livekit_room_name")
+  transcript           String?
+  audioDurationSeconds Int?      @map("audio_duration_seconds")
+  sessionStart         DateTime  @default(now()) @map("session_start")
+  sessionEnd           DateTime? @map("session_end")
+  extractedSymptoms    String?   @map("extracted_symptoms")
+  extractedPainInfo    String?   @map("extracted_pain_info")
+  aiAnalysis           String?   @map("ai_analysis")
+  confidenceScore      Float?    @map("confidence_score")
+  createdAt            DateTime  @default(now()) @map("created_at")
+
+  // Relationships
+  patient Patient @relation(fields: [patientId], references: [id])
+
+  @@map("voice_sessions")
+}
+
+model ChatSession {
+  id                   String         @id @default(cuid())
+  session_id           String
+  messages             Message[]
+  current_question     Int?           @default(0)
+  risk_score           Int            @default(0)
+  assessment_complete  Boolean        @default(false)
+  conversation_history Conversation[]
+  responses            Response[]
+  answers              Json?          @default("{}")
+}
+
+model Response {
+  id            String       @id @default(cuid())
+  question_id   Int?
+  answer        String?
+  ChatSession   ChatSession? @relation(fields: [chatSessionId], references: [id])
+  chatSessionId String?
+}
+
+enum MessageType {
+  USER
+  ASSISTANT
+}
+
+enum RiskLevel {
+  LOW
+  MODERATE
+  HIGH
+  CRITICAL
+}
+
+model Message {
+  id           String       @id @default(cuid())
+  type         String?
+  content      String?
+  timestamp    DateTime?
+  chat_session ChatSession? @relation(fields: [chatSessionId], references: [id])
+
+  chatSessionId String?
+}
+
+model Conversation {
+  id            String       @id @default(cuid())
+  role          String?
+  content       String?
+  ChatSession   ChatSession? @relation(fields: [chatSessionId], references: [id])
+  chatSessionId String?
+}
