@@ -13,7 +13,7 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Link from "next/link";
 interface Message {
-  type: "user" | "assistant";
+  role: "user" | "assistant";
   content: string;
   timestamp?: string;
 }
@@ -71,8 +71,9 @@ const AssessmentChat = () => {
     scrollToBottom();
   }, [messages]);
 
-  const ENDPOINT = "http://18.191.152.254:8000";
-  const API = "http://ec2-18-116-202-251.us-east-2.compute.amazonaws.com";
+  const API_BASE_URL = "http://localhost:8000";
+  const ENDPOINT = "https://agilance-backend.onrender.com";
+  const API = "https://api.agilance.org";
   const startChat = async () => {
     setIsLoading(true);
     try {
@@ -145,8 +146,8 @@ const AssessmentChat = () => {
       .replace(/\n/g, "<br/>");
   };
 
-  const getMessageIcon = (type: string, content: string) => {
-    if (type === "user") return "👤";
+  const getMessageIcon = (role: string, content: string) => {
+    if (role === "user") return "👤";
 
     // Different icons based on message content
     if (content.includes("🚨")) return "🚨";
@@ -197,19 +198,19 @@ const AssessmentChat = () => {
                 <div
                   key={index}
                   className={`flex ${
-                    message.type === "user" ? "justify-end" : "justify-start"
+                    message.role === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
                   <div
                     className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
-                      message.type === "user"
+                      message.role === "user"
                         ? "bg-blue-600 text-white"
                         : "bg-gray-100 text-gray-800"
                     }`}
                   >
                     <div className="flex items-start space-x-2">
                       <span className="text-sm">
-                        {getMessageIcon(message.type, message.content)}
+                        {getMessageIcon(message.role, message.content)}
                       </span>
                       <div
                         className="flex-1 text-sm leading-relaxed"

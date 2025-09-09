@@ -28,13 +28,13 @@ export default function TextMode({ onComplete }: TextModeProps) {
     scrollToBottom();
   }, [messages]);
 
-  const ENDPOINT = "http://18.191.152.254:8000";
-  const API = "http://ec2-18-116-202-251.us-east-2.compute.amazonaws.com";
+  const ENDPOINT = "https://agilance-backend.onrender.com";
+  const API = "https://api.agilance.org";
 
   const startChat = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${ENDPOINT}/api/chat/start`, {
+      const response = await fetch(`${API_BASE_URL}/api/chat/start`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export default function TextMode({ onComplete }: TextModeProps) {
     setInputMessage("");
 
     try {
-      const response = await fetch(`${API}:8000/chat/message`, {
+      const response = await fetch(`${API_BASE_URL}/api/chat/message`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,8 +103,8 @@ export default function TextMode({ onComplete }: TextModeProps) {
       .replace(/\n/g, "<br/>");
   };
 
-  const getMessageIcon = (type: string, content: string) => {
-    if (type === "user") return "👤";
+  const getMessageIcon = (role: string, content: string) => {
+    if (role === "user") return "👤";
 
     // Different icons based on message content
     if (content.includes("🚨")) return "🚨";
@@ -182,21 +182,21 @@ export default function TextMode({ onComplete }: TextModeProps) {
                     <div
                       key={index}
                       className={`flex ${
-                        message.type === "user"
+                        message.role === "user"
                           ? "justify-end"
                           : "justify-start"
                       }`}
                     >
                       <div
                         className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
-                          message.type === "user"
+                          message.role === "user"
                             ? "bg-blue-600 text-white"
                             : "bg-gray-100 text-gray-800"
                         }`}
                       >
                         <div className="flex items-start space-x-2">
                           <span className="text-sm">
-                            {getMessageIcon(message.type, message.content)}
+                            {getMessageIcon(message.role, message.content)}
                           </span>
                           <div
                             className="flex-1 text-sm leading-relaxed"

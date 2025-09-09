@@ -33,13 +33,14 @@ const Home = ({ session }: { session: Session }) => {
     signOut({ callbackUrl: "/" });
   };
 
-  const API = "http://ec2-18-116-202-251.us-east-2.compute.amazonaws.com";
+  const API = "https://agilance-backend.onrender.com";
 
   const [patients, setPatients] = useState<Patient[]>([]);
 
+  console.log(patients);
   useEffect(() => {
     const fetchPatients = async () => {
-      const response = await fetch(`${API}:8000/api/patients`);
+      const response = await fetch(`${API}/api/patients`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

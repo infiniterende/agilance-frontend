@@ -186,7 +186,7 @@ export type ScreenType = "assessment" | "results" | "appointment";
 export type ModeType = "text" | "voice";
 
 export interface Message {
-  type: "user" | "assistant";
+  role: "user" | "assistant";
   content: string;
   timestamp?: string;
 }

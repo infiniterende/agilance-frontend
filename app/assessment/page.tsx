@@ -77,6 +77,7 @@ const AssessmentPage = () => {
     setIsLoading(true);
     try {
       const response = await fetch(`${ENDPOINT}/api/chat/start`, {
+        mode: "no-cors",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,8 +99,8 @@ const AssessmentPage = () => {
     }
   };
 
-  const ENDPOINT = "http://18.191.152.254:8000";
-  const API = "http://ec2-18-116-202-251.us-east-2.compute.amazonaws.com";
+  const ENDPOINT = "https://agilance-backend.onrender.com";
+  const API = "https://api.agilance.org";
 
   const sendMessage = async () => {
     if (!inputMessage?.trim() || isLoading || !sessionId) return;
@@ -148,8 +149,8 @@ const AssessmentPage = () => {
       .replace(/\n/g, "<br/>");
   };
 
-  const getMessageIcon = (type: string, content: string) => {
-    if (type === "user") return "👤";
+  const getMessageIcon = (role: string, content: string) => {
+    if (role === "user") return "👤";
 
     // Different icons based on message content
     if (content.includes("🚨")) return "🚨";
