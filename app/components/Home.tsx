@@ -23,7 +23,7 @@ export type Patient = {
 import { DataTable } from "../dashboard/DataTable";
 import { columns } from "../dashboard/columns";
 
-const Home = ({ session }: { session: Session }) => {
+const Home = () => {
   const [currentView, setCurrentView] = useState("login");
   const [activeTab, setActiveTab] = useState("home");
   const [appointmentView, setAppointmentView] = useState("calendar");
@@ -154,7 +154,7 @@ const Home = ({ session }: { session: Session }) => {
 
         <div>
           <h2 className="text-2xl  text-gray-800 mb-6">
-            <div className="p-8">Welcome, Dr. {session.user?.name}</div>
+            <div className="p-8"></div>
           </h2>
 
           <DataTable data={patients} columns={columns} />
