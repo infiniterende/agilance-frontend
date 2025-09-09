@@ -34,7 +34,7 @@ export default function TextMode({ onComplete }: TextModeProps) {
   const startChat = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/chat/start`, {
+      const response = await fetch(`${ENDPOINT}/api/chat/start`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export default function TextMode({ onComplete }: TextModeProps) {
     setInputMessage("");
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/chat/message`, {
+      const response = await fetch(`${ENDPOINT}/api/chat/message`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
